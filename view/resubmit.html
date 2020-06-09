@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+</head>
+<script>
+    $(function(){
+         var files = '{{ files|tojson }}';
+         var files = JSON.parse(files);
+         for (var item of files) {
+            $('#files').append('<tr><td class="paperId" style="display:none">'+ item['paperId'] + '</td><td class="title">'+ item['title'] + '</td><td class="version">' + item['version']+ '</td><td >' + '<button class="btn btn-primary resubmit" data-target="#myModal">Re-upload File</button></button></td></tr>');
+
+        }
+    });
+    $(function() {
+        $('.resubmit').click(function () {
+            var $row = $(this).closest("tr"),       // Finds the closest row <tr>
+                $tds = $row.find(".paperId").text();          // Finds all children <td> elements
+                $("#paperID").val($tds);
+                $("#version").val($row.find(".version").text());
+                $("#title").val($row.find(".title").text());
+                jQuery.noConflict();
+                $('#myModal').modal('show');
+        });
+    });
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+<body>
+
+{% include 'layout.html' %}
+<div class="container">
+    <h2 style="text-align: center; margin-top: 20px">
+        Paper List
+    </h2>
+    <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Paper Title</th>
+      <th scope="col">Version</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody id="files">
+
+  </tbody>
+</table>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Resubmit Paper</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <form action="" method="post" name="submit_paper" enctype="multipart/form-data">
+            <div style="visibility:hidden" >
+            <div class="form-group">
+                    <input type="hidden" class="form-control" name="paperID" id="paperID" placeholder="paperID" value="" required >
+                </div>
+            <div class="form-group">
+                    <input type="hidden" class="form-control" name="title" id="title" placeholder="1.0" value="" required >
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="version" id="version" placeholder="1.0" required >
+                </div>
+                </div>
+                 <div class="form-group">
+                    <label for="fileUpload">File Upload</label>
+                    <input type="file" class="form-control-file" name="fileUpload" accept=".doc,.pdf, .docx" required>
+                  </div>
+                      <input type="submit" value="Submit" class="btn btn-primary float-left">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

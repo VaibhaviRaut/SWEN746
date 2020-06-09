@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+</head>
+<script>
+    $(function(){
+         var files = '{{ data|tojson }}';
+         var files = JSON.parse(files);
+         for (var item of files) {
+            $('#files').append('<tr><td class="paperId" style="display:none">'+ item['artifactID'] + '</td><td class="authorId" style="display:none">'+ item['authorID'] + '</td><td>'+ item['title'] + '</td><td class="authors">' + item['authors']+ '</td><td>' + '<button type="button" class="btn btn-success volunteer">Volunteer</button></td></tr>');
+
+        }
+    });
+    $(function() {
+        $('.volunteer').click(function () {
+            var $row = $(this).closest("tr"),       // Finds the closest row <tr>
+                $tds = $row.find(".paperId").text();
+            var author_id = $row.find(".authorId").text();
+            // Finds all children <td> elements
+            $.getJSON('/volunteerPaper', {
+                paperID: $tds,
+                authorID: author_id
+
+            }, function (data) {
+                alert(data['code']);
+                location.reload();
+            });
+        });
+    });
+
+
+</script>
+<body>
+
+{% include 'layout.html' %}
+<div class="container">
+    <h2 style="text-align: center; margin-top: 20px">
+        Paper List
+    </h2>
+    <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Paper Title</th>
+      <th scope="col">Authors</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody id="files">
+
+  </tbody>
+</table>
+
+
+    </div>
+
+</body>
+</html>

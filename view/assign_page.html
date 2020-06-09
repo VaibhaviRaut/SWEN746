@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+</head>
+<script>
+
+    $(function(){
+         var papers = '{{ paper_lst|tojson }}';
+         var papers = JSON.parse(papers);
+         for (var item of papers) {
+            $('#paper_lst').append('<tr><td class="accountId">'+ item['accountID'] + '</td><td>' + item['username']+ '</td><td>' + item['role']+ '</td><td><button class="btn btn-primary editAccount">Edit</button></td><td><button class="btn btn-danger deleteAccount">Delete</button></td></tr>');
+
+        }
+    });
+
+</script>
+<body>
+
+{% include 'layout.html' %}
+<div class="container">
+    <h2 style="text-align: center; margin-top: 20px">
+        Papers
+    </h2>
+    <table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Paper Title</th>
+      <th scope="col">PCM</th>
+        <th scope="col">Action</th>
+    </tr>
+    <tr>
+        <td> </td>
+        <td> </td>
+        <td> <button type="button" class="btn btn-success">Assign</button></td>
+    </tr>
+  </thead>
+
+  <tbody id="files">
+
+  </tbody>
+</table>
+</div>
+
+
+</body>
+</html>

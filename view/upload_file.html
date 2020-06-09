@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+<script>
+
+    $(function(){
+        let err = '{{ error }}';
+        if (err) {
+            alert(err)
+        }
+    });
+
+
+    </script>
+{% include 'layout.html' %}
+<div class="container">
+    <h2 style="text-align: center; margin-top: 20px">
+        New Paper Submission
+    </h2>
+<form method="post"  enctype="multipart/form-data">
+    <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" placeholder="Research on Accessibility" required>
+  </div>
+    <div class="form-group">
+    <label for="topic">Topic</label>
+    <input type="text" class="form-control" name="topic" placeholder="Accessibility" required>
+  </div>
+
+    <div class="form-group">
+    <label for="fileUpload">File Upload</label>
+    <input type="file" class="form-control-file" name="fileUpload" accept=".doc,.pdf, .docx" required>
+  </div>
+    <div class="form-group">
+    <label for="authors">Author(s)</label>
+    <input type="text" class="form-control" name="authors" placeholder="FirstName LastName; FirstName LastName; ..." required>
+  </div>
+
+	<input type="submit" value="Submit" class="btn btn-primary float-left">
+</form>
+    </div>
+
+</body>
+</html>
